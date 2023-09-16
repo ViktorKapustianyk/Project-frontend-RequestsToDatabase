@@ -2,11 +2,45 @@
 <head>
     <title>RPG</title>
     <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
-    <link href="/css/my.css" rel="stylesheet">
+    <link href="../css/my.css" rel="stylesheet">
+<!--    <script src="/js/script.js"></script>-->
 </head>
-<body>
+<body onload="fillTableWithPlayers()">
 <h1>RPG admin panel</h1>
 <h2>Accounts list:</h2>
+
+<table id="accounts-table">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Race</th>
+            <th>Profession</th>
+            <th>Level</th>
+            <th>Birthday</th>
+            <th>Banned</th>
+        </tr>
+</table>
+
+<script>
+    function fillTableWithPlayers() {
+    let url = "/rest/players";
+    $.get(url, function (data) {
+        $.each(data, function (index, player) {
+            $('<tr>').html("<td>"
+                + player.id + "</td><td>"
+                + player.name + "</td><td>"
+                + player.title + "</td><td>"
+                + player.race + "</td><td>"
+                + player.profession + "</td><td>"
+                + player.level + "</td><td>"
+                + new Date(player.birthday).toLocaleDateString() + "</td><td>"
+                + player.banned + "</td>"
+            ).appendTo("#accounts-table");
+        });
+    });
+}
+</script>
 
 </body>
 </html>
