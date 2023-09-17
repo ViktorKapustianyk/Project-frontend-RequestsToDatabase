@@ -3,11 +3,19 @@
     <title>RPG</title>
     <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
     <link href="../css/my.css" rel="stylesheet">
-<!--    <script src="/js/script.js"></script>-->
+    <script src="/html/script.js"></script>
 </head>
-<body onload="fillTableWithPlayers()">
+<body>
 <h1>RPG admin panel</h1>
 <h2>Accounts list:</h2>
+
+<label for="pageSizeSelect">Count per page:</label>
+<select id="pageSizeSelect" onchange="updatePagination()">
+    <option value="3">3</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+</select>
 
 <table id="accounts-table">
         <tr>
@@ -22,25 +30,7 @@
         </tr>
 </table>
 
-<script>
-    function fillTableWithPlayers() {
-    let url = "/rest/players";
-    $.get(url, function (data) {
-        $.each(data, function (index, player) {
-            $('<tr>').html("<td>"
-                + player.id + "</td><td>"
-                + player.name + "</td><td>"
-                + player.title + "</td><td>"
-                + player.race + "</td><td>"
-                + player.profession + "</td><td>"
-                + player.level + "</td><td>"
-                + new Date(player.birthday).toLocaleDateString() + "</td><td>"
-                + player.banned + "</td>"
-            ).appendTo("#accounts-table");
-        });
-    });
-}
-</script>
+<div id="pagination">Pages:</div>
 
 </body>
 </html>
