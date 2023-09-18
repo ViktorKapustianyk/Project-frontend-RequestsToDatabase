@@ -8,7 +8,7 @@ function fillTableWithPlayers(page_number, page_size) {
 
     $.get(url, function (data) {
         // Очистити таблицю перед заповненням новими даними
-        $("#accounts-table tbody").empty();
+        $("#accounts-table-body").empty();
 
         $.each(data, function (index, player) {
             $('<tr>').html("<td>"
@@ -19,8 +19,14 @@ function fillTableWithPlayers(page_number, page_size) {
                 + player.profession + "</td><td>"
                 + player.level + "</td><td>"
                 + new Date(player.birthday).toLocaleDateString() + "</td><td>"
-                + player.banned + "</td>"
-            ).appendTo("#accounts-table tbody"); // Вставка в tbody
+                + player.banned + "</td><td>"
+                + "<button id='button_edit" + player.id + "'>"
+                + "<img src='/img/edit.png'>"
+                + "</button>"+"</td><td>"
+                + "<button id='button_delete" + player.id + "'>"
+                + "<img src='/img/delete.png'>"
+                + "</button>"+"</td>"
+            ).appendTo("#accounts-table-body"); // Вставка в tbody
         });
         // Clear previous highlighting
         $('button.pgn_btn_style').css('color', '');
