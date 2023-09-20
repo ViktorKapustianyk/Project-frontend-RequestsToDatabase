@@ -128,13 +128,8 @@ function edit_player(playerId) {
     let banned_current_value = td_banned.innerHTML;
     td_banned.innerHTML = getDropDownBannedHTML(playerId, banned_current_value);
 
-
-    //
-        // sendChangesToServer(playerId);
-        // // Change the image back to Edit
-        // $(`#button_edit${playerId} img`).attr('src', '../img/edit.png');
-        // // Show the Delete button
-        // $(`#button_delete${playerId}`).show();
+    let property_save_tag = "sendChangesToServer("+ playerId + ")";
+    $(identifier_edit).attr('onclick', property_save_tag)
 
 }
 function enableEditingField(tdElement, playerId, fieldName) {
@@ -178,29 +173,30 @@ function getDropDownBannedHTML(id, currentValue) {
         + "</select>";
 }
 
-function updatedData(playerId){
-    let updatedData = {
-        name: $(`#input_name${playerId}`).val(),
-        title: $(`#input_title${playerId}`).val(),
-        race: $(`#input_race${playerId}`).val(),
-        profession: $(`#input_profession${playerId}`).val(),
-        banned: $(`#input_banned${playerId}`).val()
-    };
-
-    // Преобразуем объект в JSON строку
-    return JSON.stringify(updatedData);
-}
 function sendChangesToServer(playerId) {
-    let updatedDataOfPlayer = updatedData(playerId);
+    let value_name = $("#input_name" +playerId).val();
+    let value_title = $("#input_title" +playerId).val();
+    let value_race = $("#select_race" +playerId).val();
+    let value_profession = $("#select_profession" +playerId).val();
+    let value_banned = $("#select_banned" +playerId).val();
+
+    let url = "/rest/players/" + playerId;
     $.ajax({
+        url: url,
         type: 'POST',
-        url: `/rest/players/${playerId}`,
+        dataType: 'json',
         contentType: 'application/json;charset=UTF-8', // Указываем тип контента как JSON
-        data: updatedDataOfPlayer, // Передаем JSON данные
+        async: false,
+        data: JSON.stringify({
+            "name":value_name,
+            "title":value_title,
+            "race":value_race,
+            "profession":value_profession,
+            "banned":value_banned
+            }),
         success: function () {
             // Обработка успешного ответа от сервера
             updatePagination();
-            console.log(updatedDataOfPlayer)
         }
     });
 }
