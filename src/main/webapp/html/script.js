@@ -201,6 +201,45 @@ function sendChangesToServer(playerId) {
     });
 }
 
+function addNewPlayer(){
+    let value_name = $("#name_new").val();
+    let value_title = $("#title_new").val();
+    let value_race = $("#race_new").val();
+    let value_profession = $("#profession_new").val();
+    let value_level = $("#level_new").val();
+    let value_birthday = $("#birthday_new").val();
+    let value_banned = $("#banned_new").val();
+
+    let url = "/rest/players";
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        async: false,
+        data: JSON.stringify({
+            "name": value_name,
+            "title": value_title,
+            "race": value_race,
+            "profession": value_profession,
+            "level": value_level,
+            "birthday": new Date(value_birthday).getTime(),
+            "banned": value_banned
+        }),
+        success: function () {
+            $("#name_new").val("");
+            $("#title_new").val("");
+            $("#race_new").val("");
+            $("#profession_new").val("");
+            $("#level_new").val("");
+            $("#birthday_new").val("");
+            $("#banned_new").val("");
+            updatePagination();
+        }
+    });
+    console.log("Данные успешно отправлены на сервер.");
+}
+
 $(document).ready(function () {
     // Отримуємо та виводимо загальну кількість облікових записів перед заповненням таблиці
     let totalCount = getTotalAccountCount();

@@ -34,8 +34,63 @@
     </thead>
     <tbody id="accounts-table-body"></tbody>
 </table>
-
 <div id="pagination">Pages:</div>
 
+<hr style="width:50%;text-align:left;margin-left:0">
+<h3>Create new account:</h3>
+<form id="newPlayer">
+        <div style="display: flex; flex-direction: row;">
+            <div style="margin-right: 20px;">
+                <label for="name_new">Name:</label>
+                <input type="text" id="name_new" name="name_new" minlength="1" maxlength="12"><br><br>
+
+                <label for="title_new">Title:</label>
+                <input type="text" id="title_new" name="title_new" minlength="1" maxlength="30"><br><br>
+            </div>
+
+            <div style="margin-right: 20px;">
+                <label for="race_new">Race:</label>
+                <select id="race_new" name="race_new">
+                    <option value="HUMAN">HUMAN</option>
+                    <option value="DWARF">DWARF</option>
+                    <option value="ELF">ELF</option>
+                    <option value="GIANT">GIANT</option>
+                    <option value="ORC">ORC</option>
+                    <option value="TROLL">TROLL</option>
+                    <option value="HOBBIT">HOBBIT</option>
+                </select><br><br>
+
+                <label for="profession_new">Profession:</label>
+                <select id="profession_new" name="profession_new">
+                    <option value="WARRIOR">WARRIOR</option>
+                    <option value="ROGUE">ROGUE</option>
+                    <option value="SORCERER">SORCERER</option>
+                    <option value="CLERIC">CLERIC</option>
+                    <option value="PALADIN">PALADIN</option>
+                    <option value="NAZGUL">NAZGUL</option>
+                    <option value="WARLOCK">WARLOCK</option>
+                    <option value="DRUID">DRUID</option>
+                </select><br><br>
+            </div>
+
+            <div>
+                <label for="level_new">Level:</label>
+                <input type="number" id="level_new" name="level_new" min="0" max="100"><br><br>
+
+                <label for="birthday_new">Birthday:</label>
+                <input type="date" id="birthday_new" name="birthday_new"><br><br>
+            </div>
+            <div>
+                <label for="banned_new">Banned:</label>
+                <select id="banned_new" name="banned_new">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </select><br><br>
+
+                <input id="save_button" type="image" src="../img/save.png" alt="Submit" style="margin-left: 70px;" onclick="addNewPlayer()">
+            </div>
+        </div>
+
+</form>
 </body>
 </html>
