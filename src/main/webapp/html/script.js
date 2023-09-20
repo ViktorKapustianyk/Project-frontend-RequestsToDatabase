@@ -1,4 +1,6 @@
 console.log("ready!");
+let isEditing = false; // Глобальная переменная для отслеживания редактирования
+
 
 function fillTableWithPlayers(page_number, page_size) {
     let url = "/rest/players";
@@ -104,21 +106,103 @@ function edit_player(playerId) {
     let identifier_edit = '#button_edit' +playerId;
     let current_tr_element = $(identifier_edit).parent().parent();
     let children = current_tr_element.children();
-    // Change the image on the Edit button
-    $(`#button_edit${playerId} img`).attr('src', '../img/save.png');
-    // Hide the Delete button
-    $(`#button_delete${playerId}`).hide();
 
-    // Enable editing for the specific row's fields
-    enableEditingField(children[1], playerId, 'name');
-    enableEditingField(children[2], playerId, 'title');
-    enableEditingField(children[3], playerId, 'race');
-    enableEditingField(children[4], playerId, 'profession');
-    enableEditingField(children[5], playerId, 'banned');
+        // Change the image on the Edit button
+        $(`#button_edit${playerId} img`).attr('src', '../img/save.png');
+        // Hide the Delete button
+        $(`#button_delete${playerId}`).hide();
+
+        // Enable editing for the specific row's fields
+        enableEditingField(children[1], playerId, 'name');
+        enableEditingField(children[2], playerId, 'title');
+
+    let td_race = children[3];
+    let race_current_value = td_race.innerHTML;
+    td_race.innerHTML = getDropDownRaceHTML(playerId, race_current_value);
+
+    let td_profession = children[4];
+    let profession_current_value = td_profession.innerHTML;
+    td_profession.innerHTML = getDropDownProfessionHTML(playerId, profession_current_value);
+
+    let td_banned = children[7];
+    let banned_current_value = td_banned.innerHTML;
+    td_banned.innerHTML = getDropDownBannedHTML(playerId, banned_current_value);
+
+
+    //
+        // sendChangesToServer(playerId);
+        // // Change the image back to Edit
+        // $(`#button_edit${playerId} img`).attr('src', '../img/edit.png');
+        // // Show the Delete button
+        // $(`#button_delete${playerId}`).show();
 
 }
 function enableEditingField(tdElement, playerId, fieldName) {
     tdElement.innerHTML = `<input id='input_${fieldName}${playerId}' type='text' value='${tdElement.innerHTML}'>`;
+}
+
+function getDropDownRaceHTML(id, currentValue) {
+    let race_id = "select_race" + id;
+    return "<label for='race'></label>"
+        + "<select id=" + race_id + " name='race'>"
+        + `<option value='HUMAN' ${currentValue === 'HUMAN' ? 'selected' : ''}>HUMAN</option>`
+        + `<option value='DWARF' ${currentValue === 'DWARF' ? 'selected' : ''}>DWARF</option>`
+        + `<option value='ELF' ${currentValue === 'ELF' ? 'selected' : ''}>ELF</option>`
+        + `<option value='GIANT' ${currentValue === 'GIANT' ? 'selected' : ''}>GIANT</option>`
+        + `<option value='ORC' ${currentValue === 'ORC' ? 'selected' : ''}>ORC</option>`
+        + `<option value='TROLL' ${currentValue === 'TROLL' ? 'selected' : ''}>TROLL</option>`
+        + `<option value='HOBBIT' ${currentValue === 'HOBBIT' ? 'selected' : ''}>HOBBIT</option>`
+        + "</select>";
+}
+
+function getDropDownProfessionHTML(id, currentValue) {
+    let profession_id = "select_profession" + id;
+    return "<label for='profession'></label>"
+        + "<select id=" + profession_id + " name='profession'>"
+        + `<option value='WARRIOR' ${currentValue === 'WARRIOR' ? 'selected' : ''}>WARRIOR</option>`
+        + `<option value='ROGUE' ${currentValue === 'ROGUE' ? 'selected' : ''}>ROGUE</option>`
+        + `<option value='SORCERER' ${currentValue === 'SORCERER' ? 'selected' : ''}>SORCERER</option>`
+        + `<option value='CLERIC' ${currentValue === 'CLERIC' ? 'selected' : ''}>CLERIC</option>`
+        + `<option value='PALADIN' ${currentValue === 'PALADIN' ? 'selected' : ''}>PALADIN</option>`
+        + `<option value='NAZGUL' ${currentValue === 'NAZGUL' ? 'selected' : ''}>NAZGUL</option>`
+        + `<option value='WARLOCK' ${currentValue === 'WARLOCK' ? 'selected' : ''}>WARLOCK</option>`
+        + `<option value='DRUID' ${currentValue === 'DRUID' ? 'selected' : ''}>DRUID</option>`
+        + "</select>";
+}
+function getDropDownBannedHTML(id, currentValue) {
+    let banned_id = "select_banned" + id;
+    return "<label for='banned'></label>"
+        + "<select id=" + banned_id + " name='banned'>"
+        + `<option value='true' ${currentValue === 'true' ? 'selected' : ''}>true</option>`
+        + `<option value='false' ${currentValue === 'false' ? 'selected' : ''}>false</option>`
+        + "</select>";
+}
+
+function updatedData(playerId){
+    let updatedData = {
+        name: $(`#input_name${playerId}`).val(),
+        title: $(`#input_title${playerId}`).val(),
+        race: $(`#input_race${playerId}`).val(),
+        profession: $(`#input_profession${playerId}`).val(),
+        banned: $(`#input_banned${playerId}`).val()
+    };
+
+    // Преобразуем объект в JSON строку
+    return JSON.stringify(updatedData);
+}
+function sendChangesToServer(playerId) {
+    let updatedDataOfPlayer = updatedData(playerId);
+    $.ajax({
+        type: 'POST',
+        url: `/rest/players/${playerId}`,
+        contentType: 'application/json;charset=UTF-8', // Указываем тип контента как JSON
+        data: updatedDataOfPlayer, // Передаем JSON данные
+        success: function () {
+            // Обработка успешного ответа от сервера
+            updatePagination();
+            console.log(updatedDataOfPlayer)
+        }
+    });
 }
 
 $(document).ready(function () {
