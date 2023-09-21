@@ -96,10 +96,22 @@ function delete_player(id){
         type: 'DELETE',
         async: false,
         success: function () {
-            updatePagination();
+            let currentPage = getCurrentPage();
+            fillTableWithPlayers(currentPage, $('#pageSizeSelect').val());
         }
     });
 }
+
+function getCurrentPage() {
+    let currentPage = 0;
+    $('#pagination button').each(function (index) {
+        if ($(this).css('color') === 'rgb(255, 0, 0)') {
+            currentPage = parseInt($(this).text());
+        }
+    });
+    return currentPage - 1; // Увеличиваем на 1, так как индексы начинаются с 0, а страницы с 1
+}
+
 
 function edit_player(playerId) {
 
@@ -195,8 +207,8 @@ function sendChangesToServer(playerId) {
             "banned":value_banned
             }),
         success: function () {
-            // Обработка успешного ответа от сервера
-            updatePagination();
+            let currentPage = getCurrentPage();
+            fillTableWithPlayers(currentPage, $('#pageSizeSelect').val());
         }
     });
 }
