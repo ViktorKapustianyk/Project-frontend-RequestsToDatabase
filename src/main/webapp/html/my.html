@@ -34,9 +34,9 @@
     </thead>
     <tbody id="accounts-table-body"></tbody>
 </table>
-<div id="pagination">Pages:</div>
+<div id="pagination" class="pagination">Pages:</div>
 
-<hr style="width:50%;text-align:left;margin-left:0">
+<hr>
 <h3>Create new account:</h3>
 <form id="newPlayer">
         <div style="display: flex; flex-direction: row;">
@@ -78,7 +78,7 @@
                 <input type="number" id="level_new" name="level_new" min="0" max="100"><br><br>
 
                 <label for="birthday_new">Birthday:</label>
-                <input type="date" id="birthday_new" name="birthday_new"><br><br>
+                <input type="date" id="birthday_new" name="birthday_new" min="2000-01-01" max="3000-12-31"><br><br>
             </div>
             <div>
                 <label for="banned_new">Banned:</label>

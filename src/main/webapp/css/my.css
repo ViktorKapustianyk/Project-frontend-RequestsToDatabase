@@ -1,3 +1,82 @@
-table, th, td {
-    border: 1px solid;
+#accounts-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
+
+#accounts-table td, #accounts-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#accounts-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#accounts-table tr:hover {background-color: #ddd;}
+
+#accounts-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+div.pagination {
+    background-color: #49a46a;
+    opacity: 0.8;
+}
+input[type=text] {
+    width: 75%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+input[type=number] {
+    width: 30%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+#pageSizeSelect {
+    width: 1%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+#race_new {
+    width: 50%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+#profession_new {
+    width: 50%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+
+#banned_new {
+    width: 50%;
+    padding: 4px 12px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #3CBC8D;
+    color: white;
+}
+
