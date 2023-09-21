@@ -246,10 +246,10 @@ function addNewPlayer(){
             $("#level_new").val("");
             $("#birthday_new").val("");
             $("#banned_new").val("");
-            updatePagination();
+            let currentPage = getCurrentPage();
+            updatePagination(currentPage, $('#pageSizeSelect').val());
         }
     });
-    console.log("Данные успешно отправлены на сервер.");
 }
 
 $(document).ready(function () {

@@ -43,9 +43,9 @@ input[type=number] {
     color: white;
 }
 #pageSizeSelect {
-    width: 1%;
-    padding: 4px 12px;
-    margin: 2px 0;
+    width: 4%;
+    padding: 2px 12px;
+    margin: 1px 0;
     box-sizing: border-box;
     border: none;
     background-color: #3CBC8D;
